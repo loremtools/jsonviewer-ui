@@ -1,10 +1,9 @@
 .app .contents {
-  width: 1080px;
-  height: 400px;
+  height: 800px;
 }
 
-.app .contents .menu {
-  padding: 10px 0;
+.app .contents {
+  padding: 0;
 }
 
 .app .contents .code {
