@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
+import io from 'socket.io-client';
 
 import JSONEditorBox from './JSONEditorBox';
 import './JsonViewerPanel.css';
 
-class JsonViewerPanel extends Component {
-  state = {
-    json: {}
-  };
+function JsonViewerPanel() {
+  const [json, setJson] = useState({});
 
-  render() {
-    return (
+  const socket = io();
+
+  socket.on('update_editor',function(msg){
+    json = msg;
+    // jsoneditor.updateText(msg);
+  });
+
+  socket.emit('join_channel', "momiapp");
+  
+  return (
     <div className="contents">
         <JSONEditorBox
-            json={this.state.json}
-            onChangeJSON={this.onChangeJSON}
+            json={json}
+            onChangeJSON={setJson}
         />
     </div>
-    );
-  }
-
-  onChangeJSON = (json) => {
-    this.setState({ json });
-  };
+  );
 }
 
 export default JsonViewerPanel;
